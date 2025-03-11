@@ -20,8 +20,12 @@ namespace PacManKC2312
             _symboleFood = '.';
             _symboleEmptyCell = ' ';
             _map = ReadFileMap(path);
-            
+            PositionEnemis = DeterminePositionEnemis();
+            CountFood = DetermineCountFood();
         }
+
+        public Vector PositionEnemis { get; private set; }
+        public int CountFood { get; private set; }
 
         public void Draw()
         {
@@ -34,13 +38,14 @@ namespace PacManKC2312
             }
         }
 
-        public bool IsFood(Vector vector)
+        public bool IsFood(Player player)
         {
             bool isFood = false;
+            Vector position = player.Position;
 
-            if(_map[vector.Y, vector.X] == _symboleFood)
+            if(_map[position.Y, position.X] == _symboleFood)
             {
-                _map[vector.Y, vector.X] = _symboleEmptyCell;
+                _map[position.Y, position.X] = _symboleEmptyCell;
                 isFood = true;
             }
 
@@ -50,6 +55,39 @@ namespace PacManKC2312
         public bool IsWall(Vector vector)
         {
             return _map[vector.Y, vector.X] == _symboleWall;
+        }
+
+        private Vector DeterminePositionEnemis()
+        {
+            int x = 0;
+            int y = 0;
+
+            for (int j = 0; j < _map.GetLength(0); j++)
+            {
+                for(int i = 0;i < _map.GetLength(1); i++)
+                {
+                    if (_map[i, j] == '$')
+                    {
+                        x = i;
+                        y = j;
+                    }
+                }
+            }
+
+            Vector position = new Vector(x,y);
+            return position;
+        }
+
+        private int DetermineCountFood()
+        {
+            int countFood = 0;
+
+            for (int y = 0; y < _map.GetLength(0); y++)
+                for (int x = 0; x < _map.GetLength(1); x++)
+                    if (_map[x, y] == _symboleFood)
+                        countFood++;
+
+                    return countFood;
         }
 
         private char[,] ReadFileMap(string path)
