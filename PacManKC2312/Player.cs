@@ -9,14 +9,15 @@ namespace PacManKC2312
     public class Player: GameObject
     {
         private int _direction;
-        private Vector _startPosition;
-
+       
         public Player(Vector position) : base(position, '@')
         {
             _direction = KayMoveRigth;
-            _startPosition = position;
             CountLive = 3;
+            IsBonus = false;
         }
+
+        public bool IsBonus { get; private set; }
 
         public int CountLive { get; private set; }
 
@@ -65,6 +66,12 @@ namespace PacManKC2312
                     _direction = KayMoveRigth;
                     break;
             }
+        }
+
+        public void TakeDamage()
+        {
+            CountLive--;
+            GetStartPosition();
         }
     }
 }

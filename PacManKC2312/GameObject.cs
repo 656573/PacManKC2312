@@ -14,10 +14,13 @@ namespace PacManKC2312
         protected const int KayMoveLeft = 3;
         protected const int KayMoveRigth = 4;
 
+        private Vector _startPosition;
+
         public GameObject(Vector position, char symbol)
         {
             Position = position;
             Symbol = symbol;
+            _startPosition = position;
 
             MoveForward = 1;
             MoveStop = 0;
@@ -50,5 +53,7 @@ namespace PacManKC2312
             if (level.IsWall(Position))
                 Position = oldPosition;
         }
+
+        protected void GetStartPosition() => Position = _startPosition;
     }
 }
