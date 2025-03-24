@@ -54,8 +54,8 @@ namespace PacManKC2312
                     break;
             }
 
-            UpdateDirection();
             UpdateOldDirection();
+            UpdateDirection();
         }
 
         private void UpdateDirection()
@@ -72,16 +72,16 @@ namespace PacManKC2312
                 switch (_oldDirection)
                 {
                     case KeyMoveDown:
-                        GetMoveDirection(moveUp, moveDown, KeyMoveRigth, KeyMoveLeft, KeyMoveUp);
+                        GetMoveDirection(moveUp, moveRigth, KeyMoveLeft, KeyMoveRigth, KeyMoveUp);
                         break;
                     case KeyMoveUp:
-                        GetMoveDirection(moveDown, moveUp, KeyMoveRigth, KeyMoveLeft, KeyMoveDown);
+                        GetMoveDirection(moveDown, moveRigth, KeyMoveLeft, KeyMoveRigth, KeyMoveDown);
                         break;
                     case KeyMoveLeft:
-                        GetMoveDirection(moveRigth, moveLeft, KeyMoveDown, KeyMoveUp, KeyMoveRigth);
+                        GetMoveDirection(moveRigth, moveUp, KeyMoveDown, KeyMoveUp, KeyMoveRigth);
                         break;
                     case KeyMoveRigth:
-                        GetMoveDirection(moveLeft,moveRigth,KeyMoveDown,KeyMoveUp,KeyMoveLeft);
+                        GetMoveDirection(moveLeft,moveUp,KeyMoveDown,KeyMoveUp,KeyMoveLeft);
                         break;
                 }
             }
