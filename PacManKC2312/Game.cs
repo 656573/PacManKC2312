@@ -66,6 +66,10 @@ namespace PacManKC2312
         private void Update()
         {
             _player.Update(_level);
+            _enemieOne.Update(_level);
+            _enemieTwo.Update(_level);
+            _enemieFre.Update(_level);
+            _enemieFo.Update(_level);
 
             if (_level.IsFood(_player))
                 _countPoint++;
@@ -86,6 +90,10 @@ namespace PacManKC2312
             Console.WriteLine(info);   
 
             _player.Draw();
+            _enemieOne.Draw();
+            _enemieTwo.Draw();
+            _enemieFre.Draw();
+            _enemieFo.Draw();
         }
     }
 }
