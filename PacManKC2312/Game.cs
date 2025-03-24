@@ -14,11 +14,20 @@ namespace PacManKC2312
 
         private Level _level;
         private Player _player;
+        private Enemie _enemieOne;
+        private Enemie _enemieTwo;
+        private Enemie _enemieFre;
+        private Enemie _enemieFo;
 
         public Game()
         {
-            _player = new Player(new Vector(2,2));
             _level = new Level("map.txt");
+            _player = new Player(new Vector(2,2));
+            _enemieOne = new Enemie(_level, _player);
+            _enemieTwo = new Enemie(_level, _player);
+            _enemieFre = new Enemie(_level, _player);
+            _enemieFo = new Enemie(_level, _player);
+
             _countPoint = 0;
             _delay = 500;
         }

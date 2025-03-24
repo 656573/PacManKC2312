@@ -72,43 +72,39 @@ namespace PacManKC2312
                 switch (_oldDirection)
                 {
                     case KeyMoveDown:
-                        if (_level.IsWall(Position + moveUp))
-                            if (_level.IsWall(Position + moveLeft))
-                                _direction = KeyMoveRigth;
-                            else
-                                _direction = KeyMoveLeft;
-                        else
-                            _direction = KeyMoveUp;
+                        GetMoveDirection(moveUp, moveDown, KeyMoveRigth, KeyMoveLeft, KeyMoveUp);
                         break;
                     case KeyMoveUp:
-                        if (_level.IsWall(Position + moveDown))
-                            if (_level.IsWall(Position + moveLeft))
-                                _direction = KeyMoveRigth;
-                            else
-                                _direction = KeyMoveLeft;
-                        else
-                            _direction = KeyMoveDown;
+                        GetMoveDirection(moveDown, moveUp, KeyMoveRigth, KeyMoveLeft, KeyMoveDown);
                         break;
                     case KeyMoveLeft:
-                        if (_level.IsWall(Position + moveRigth))
-                            if (_level.IsWall(Position + moveUp))
-                                _direction = KeyMoveUp;
-                            else
-                                _direction = KeyMoveDown;
-                        else
-                            _direction = KeyMoveRigth;
+                        GetMoveDirection(moveRigth, moveLeft, KeyMoveDown, KeyMoveUp, KeyMoveRigth);
                         break;
                     case KeyMoveRigth:
-                        if (_level.IsWall(Position + moveRigth))
-                            if (_level.IsWall(Position + moveUp))
-                                _direction = KeyMoveUp;
-                            else
-                                _direction = KeyMoveDown;
-                        else
-                            _direction = KeyMoveLeft;
+                        GetMoveDirection(moveLeft,moveRigth,KeyMoveDown,KeyMoveUp,KeyMoveLeft);
                         break;
                 }
             }
+            else 
+            {
+                int direction = _oldDirection;
+
+                while (direction == _oldDirection)
+                    direction = GameSeting.GetRandomNumber(4);
+
+                _direction = direction;
+            }
+        }
+
+        private void GetMoveDirection(Vector vectorOne, Vector vectorTwo,int keyOne, int keyTwo,int keyFre)
+        {
+            if (_level.IsWall(Position + vectorOne))
+                if (_level.IsWall(Position + vectorTwo))
+                    _direction = keyOne;
+                else
+                    _direction = keyTwo;
+            else
+                _direction = keyFre;
         }
 
         private void UpdateOldDirection()
