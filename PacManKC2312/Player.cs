@@ -12,7 +12,7 @@ namespace PacManKC2312
        
         public Player(Vector position) : base(position, '@')
         {
-            _direction = KayMoveRigth;
+            _direction = KeyMoveRigth;
             CountLive = 3;
             IsBonus = false;
         }
@@ -27,16 +27,16 @@ namespace PacManKC2312
         {
             switch (_direction)
             {
-                case KayMoveUp:
+                case KeyMoveUp:
                     SetPosition(new Vector(MoveStop, MoveBack), level);
                     break;
-                case KayMoveDown:
+                case KeyMoveDown:
                     SetPosition(new Vector(MoveStop, MoveForward), level);
                     break;
-                case KayMoveLeft:
+                case KeyMoveLeft:
                     SetPosition(new Vector(MoveBack, MoveStop), level);
                     break;
-                case KayMoveRigth:
+                case KeyMoveRigth:
                     SetPosition(new Vector(MoveForward, MoveStop), level);
                     break;
             }
@@ -54,16 +54,16 @@ namespace PacManKC2312
             switch (key)
             {
                 case KeyUp:
-                    _direction = KayMoveUp;
+                    _direction = KeyMoveUp;
                     break;
                 case KeyDown:
-                    _direction = KayMoveDown;
+                    _direction = KeyMoveDown;
                     break;
                 case KeyLeft:
-                    _direction = KayMoveLeft;
+                    _direction = KeyMoveLeft;
                     break;
                 case KeyRight:
-                    _direction = KayMoveRigth;
+                    _direction = KeyMoveRigth;
                     break;
             }
         }

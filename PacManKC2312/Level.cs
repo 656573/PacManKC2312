@@ -38,6 +38,17 @@ namespace PacManKC2312
             }
         }
 
+        public char[,] GetMap() 
+        {
+            char[,] map = new char[_map.GetLength(0), _map.GetLength(1)];
+
+            for (int y = 0; y < map.GetLength(0); y++)
+                for (int x = 0; x < _map.GetLength(1); x++)
+                    map[y, x] = _map[y, x];
+
+            return map;
+        }
+
         public bool IsFood(Player player)
         {
             bool isFood = false;

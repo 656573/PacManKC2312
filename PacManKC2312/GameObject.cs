@@ -9,10 +9,10 @@ namespace PacManKC2312
 {
     public abstract class GameObject
     {
-        protected const int KayMoveUp = 1;
-        protected const int KayMoveDown = 2;
-        protected const int KayMoveLeft = 3;
-        protected const int KayMoveRigth = 4;
+        protected const int KeyMoveUp = 1;
+        protected const int KeyMoveDown = 2;
+        protected const int KeyMoveLeft = 3;
+        protected const int KeyMoveRigth = 4;
 
         private Vector _startPosition;
 
