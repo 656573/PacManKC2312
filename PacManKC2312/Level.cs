@@ -29,10 +29,24 @@ namespace PacManKC2312
 
         public void Draw()
         {
+            ConsoleColor color ;
+
             for (int y = 0; y < _map.GetLength(0); y++)
             {
                 for(int x = 0; x <  _map.GetLength(1); x++)
+                {
+                    if (_map[y, x] == _symboleWall)
+                        color = ConsoleColor.Blue;
+                    else if (_map[y, x] == _symboleFood)
+                        color = ConsoleColor.Yellow;
+                    else if (_map[y, x] == '$')
+                        color = ConsoleColor.Red;
+                    else
+                        color = ConsoleColor.Black;
+
+                    Console.ForegroundColor = color;
                     Console.Write(_map[y,x]);
+                }
 
                 Console.WriteLine();
             }

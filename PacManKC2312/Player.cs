@@ -10,7 +10,7 @@ namespace PacManKC2312
     {
         private int _direction;
        
-        public Player(Vector position) : base(position, '@')
+        public Player(Vector position) : base(position, '@', ConsoleColor.Yellow)
         {
             _direction = KeyMoveRigth;
             CountLive = 3;
@@ -72,6 +72,15 @@ namespace PacManKC2312
         {
             CountLive--;
             GetStartPosition();
+        }
+
+        public void ActivateBonus()
+        {
+            IsBonus = true;
+        }
+        public void DiactivateBonus()
+        {
+            IsBonus = false;
         }
     }
 }

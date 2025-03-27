@@ -20,7 +20,7 @@ namespace PacManKC2312
         private Vector _moveLeft;
         private Vector _moveRigth;
 
-        public Enemie(Level level, Player player) : base(level.PositionEnemis, 'S')
+        public Enemie(Level level, Player player) : base(level.PositionEnemis, 'S', ConsoleColor.Red)
         {
             _player = player;
             _level = level;
@@ -37,7 +37,10 @@ namespace PacManKC2312
         {
             if(Position == _player.Position)
             {
-
+                if (_player.IsBonus)
+                    GetStartPosition();
+                else
+                    _player.TakeDamage();
             }
 
             switch (_direction)

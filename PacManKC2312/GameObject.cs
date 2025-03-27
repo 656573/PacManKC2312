@@ -15,8 +15,9 @@ namespace PacManKC2312
         protected const int KeyMoveRigth = 4;
 
         private Vector _startPosition;
+        private ConsoleColor _color;
 
-        public GameObject(Vector position, char symbol)
+        public GameObject(Vector position, char symbol, ConsoleColor color)
         {
             Position = position;
             Symbol = symbol;
@@ -25,6 +26,12 @@ namespace PacManKC2312
             MoveForward = 1;
             MoveStop = 0;
             MoveBack = -1;
+            _color = color;
+        }
+
+        public GameObject(char symbol)
+        {
+            Symbol = symbol;
         }
 
         public Vector Position { get; private set;}
@@ -39,8 +46,9 @@ namespace PacManKC2312
 
         public abstract void Update(Level level);
 
-        public void Draw()
+        public virtual void Draw()
         {
+            Console.ForegroundColor = _color;
             Console.SetCursorPosition(Position.X,Position.Y);
             Console.Write(Symbol);
         }

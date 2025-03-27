@@ -10,26 +10,33 @@ namespace PacManKC2312
     public class Game
     {
         private int _countPoint;
+        private int _timerBonus;
+        private int _timyBonus;
         private int _delay;
 
+        private List<GameObject> _gameObjects;
         private Level _level;
         private Player _player;
-        private Enemie _enemieOne;
-        private Enemie _enemieTwo;
-        private Enemie _enemieFre;
-        private Enemie _enemieFo;
 
         public Game()
         {
+            _gameObjects = new List<GameObject>();
             _level = new Level("map.txt");
-            _player = new Player(new Vector(2,2));
-            _enemieOne = new Enemie(_level, _player);
-            _enemieTwo = new Enemie(_level, _player);
-            _enemieFre = new Enemie(_level, _player);
-            _enemieFo = new Enemie(_level, _player);
+            _player = new Player(new Vector(1,1));
+
+            _gameObjects.Add(_player);
+            _gameObjects.Add(new Enemie(_level, _player));
+            _gameObjects.Add(new Enemie(_level, _player));
+            _gameObjects.Add(new Enemie(_level, _player));
+            _gameObjects.Add(new Enemie(_level, _player));
+            _gameObjects.Add(new Bonus(_level, _player));
+            _gameObjects.Add(new Bonus(_level, _player));
+            _gameObjects.Add(new Bonus(_level, _player));
 
             _countPoint = 0;
             _delay = 500;
+            _timerBonus = 0;
+            _timyBonus = 20;
         }
 
         public void Start()
@@ -65,14 +72,24 @@ namespace PacManKC2312
 
         private void Update()
         {
-            _player.Update(_level);
-            _enemieOne.Update(_level);
-            _enemieTwo.Update(_level);
-            _enemieFre.Update(_level);
-            _enemieFo.Update(_level);
+            foreach (GameObject gameObject in _gameObjects)
+                gameObject.Update(_level);
 
             if (_level.IsFood(_player))
                 _countPoint++;
+
+            if (_player.IsBonus)
+            {
+                if(_timerBonus == _timyBonus)
+                {
+                    _player.DiactivateBonus();
+                    _timerBonus = 0;
+                }
+                else
+                {
+                    _timerBonus++;
+                }
+            }
         }
 
         private void Draw()
@@ -87,13 +104,10 @@ namespace PacManKC2312
                 lineSymbolPlayer += _player.Symbol;
 
             info += $"{lineSymbolPlayer}        очки {_countPoint}";
-            Console.WriteLine(info);   
+            Console.WriteLine(info);
 
-            _player.Draw();
-            _enemieOne.Draw();
-            _enemieTwo.Draw();
-            _enemieFre.Draw();
-            _enemieFo.Draw();
+            foreach (GameObject gameObject in _gameObjects)
+                gameObject.Draw();
         }
     }
 }
