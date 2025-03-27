@@ -99,7 +99,7 @@ namespace PacManKC2312
                 }
             }
 
-            Vector position = new Vector(x,y);
+            Vector position = new Vector(y,x);
             return position;
         }
 
