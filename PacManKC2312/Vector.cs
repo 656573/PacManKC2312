@@ -37,7 +37,5 @@ namespace PacManKC2312
         {
             return one.X != two.X && one.Y != two.Y;
         }
-
-
     }
 }

@@ -15,10 +15,10 @@ namespace PacManKC2312
         private int _direction;
         private int _oldDirection;
 
-        private Vector moveUp = new Vector(0, -1);
-        private Vector moveDown = new Vector(0, 1);
-        private Vector moveLeft = new Vector(-1, 0);
-        private Vector moveRigth = new Vector(1, 0);
+        private Vector _moveUp;
+        private Vector _moveDown;
+        private Vector _moveLeft;
+        private Vector _moveRigth;
 
         public Enemie(Level level, Player player) : base(level.PositionEnemis, 'S')
         {
@@ -27,12 +27,14 @@ namespace PacManKC2312
             _map = level.GetMap();
             _direction = KeyMoveUp;
             _oldDirection = KeyMoveDown;
+            _moveUp = new Vector(MoveStop, MoveBack);
+            _moveDown = new Vector(MoveStop, MoveForward);
+            _moveLeft = new Vector(MoveBack, MoveStop);
+            _moveRigth = new Vector(MoveForward, MoveStop);
         }
 
         public override void Update(Level level)
         {
-            
-
             if(Position == _player.Position)
             {
 
@@ -41,16 +43,16 @@ namespace PacManKC2312
             switch (_direction)
             {
                 case KeyMoveUp:
-                    SetPosition(moveUp, _level);
+                    SetPosition(_moveUp, _level);
                     break;
                 case KeyMoveDown:
-                    SetPosition(moveDown, _level);
+                    SetPosition(_moveDown, _level);
                     break;
                 case KeyMoveLeft:
-                    SetPosition(moveLeft, _level);
+                    SetPosition(_moveLeft, _level);
                     break;
                 case KeyMoveRigth:
-                    SetPosition(moveRigth, _level);
+                    SetPosition(_moveRigth, _level);
                     break;
             }
 
@@ -60,32 +62,27 @@ namespace PacManKC2312
 
         private void UpdateDirection()
         {
-            int countFreePaths = 4;
+            int countFreePaths = GetCountFreePaths();
 
-            SetOldDirection(_level.IsWall(new Vector(Position.X, Position.Y - 1)), ref countFreePaths);
-            SetOldDirection(_level.IsWall(new Vector(Position.X, Position.Y + 1)), ref countFreePaths);
-            SetOldDirection(_level.IsWall(new Vector(Position.X - 1, Position.Y)), ref countFreePaths);
-            SetOldDirection(_level.IsWall(new Vector(Position.X + 1, Position.Y)), ref countFreePaths);
-
-            if(countFreePaths == 2)
+            if (countFreePaths == 2)
             {
                 switch (_oldDirection)
                 {
                     case KeyMoveDown:
-                        GetMoveDirection(moveUp, moveRigth, KeyMoveLeft, KeyMoveRigth, KeyMoveUp);
+                        GetMoveDirection(_moveUp, _moveRigth, KeyMoveLeft, KeyMoveRigth, KeyMoveUp);
                         break;
                     case KeyMoveUp:
-                        GetMoveDirection(moveDown, moveRigth, KeyMoveLeft, KeyMoveRigth, KeyMoveDown);
+                        GetMoveDirection(_moveDown, _moveRigth, KeyMoveLeft, KeyMoveRigth, KeyMoveDown);
                         break;
                     case KeyMoveLeft:
-                        GetMoveDirection(moveRigth, moveUp, KeyMoveDown, KeyMoveUp, KeyMoveRigth);
+                        GetMoveDirection(_moveRigth, _moveUp, KeyMoveDown, KeyMoveUp, KeyMoveRigth);
                         break;
                     case KeyMoveRigth:
-                        GetMoveDirection(moveLeft,moveUp,KeyMoveDown,KeyMoveUp,KeyMoveLeft);
+                        GetMoveDirection(_moveLeft, _moveUp, KeyMoveDown, KeyMoveUp, KeyMoveLeft);
                         break;
                 }
             }
-            else 
+            else
             {
                 int direction = _oldDirection;
 
@@ -94,6 +91,17 @@ namespace PacManKC2312
 
                 _direction = direction;
             }
+        }
+
+        private int GetCountFreePaths()
+        {
+            int countFreePaths = 4;
+
+            CountingPaths(_level.IsWall(new Vector(Position.X, Position.Y - 1)), ref countFreePaths);
+            CountingPaths(_level.IsWall(new Vector(Position.X, Position.Y + 1)), ref countFreePaths);
+            CountingPaths(_level.IsWall(new Vector(Position.X - 1, Position.Y)), ref countFreePaths);
+            CountingPaths(_level.IsWall(new Vector(Position.X + 1, Position.Y)), ref countFreePaths);
+            return countFreePaths;
         }
 
         private void GetMoveDirection(Vector vectorOne, Vector vectorTwo,int keyOne, int keyTwo,int keyFre)
@@ -109,7 +117,6 @@ namespace PacManKC2312
 
         private void UpdateOldDirection()
         {
-            int countFreePaths = 4;
 
             switch (_direction)
             {
@@ -126,17 +133,18 @@ namespace PacManKC2312
                     _oldDirection = KeyMoveLeft;
                     break;
             }
-
-            SetOldDirection(_level.IsWall(new Vector(Position.X, Position.Y - 1)), ref countFreePaths);
-            SetOldDirection(_level.IsWall(new Vector(Position.X, Position.Y + 1)), ref countFreePaths);
-            SetOldDirection(_level.IsWall(new Vector(Position.X - 1, Position.Y)), ref countFreePaths);
-            SetOldDirection(_level.IsWall(new Vector(Position.X + 1, Position.Y)), ref countFreePaths);
+            
+            int countFreePaths = GetCountFreePaths();
 
             if (countFreePaths == 1)
+            {
+                int direction = _direction;
                 _direction = _oldDirection;
+                _oldDirection = direction;
+            }
         }
 
-        private void SetOldDirection(bool isWall, ref int countFreePaths)
+        private void CountingPaths(bool isWall, ref int countFreePaths)
         {
             if (isWall)
                 countFreePaths--;
