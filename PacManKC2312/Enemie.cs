@@ -43,6 +43,7 @@ namespace PacManKC2312
                     _player.TakeDamage();
             }
 
+
             switch (_direction)
             {
                 case KeyMoveUp:

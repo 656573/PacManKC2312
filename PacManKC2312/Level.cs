@@ -1,9 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PacManKC2312
 {
@@ -29,11 +25,11 @@ namespace PacManKC2312
 
         public void Draw()
         {
-            ConsoleColor color ;
+            ConsoleColor color;
 
             for (int y = 0; y < _map.GetLength(0); y++)
             {
-                for(int x = 0; x <  _map.GetLength(1); x++)
+                for (int x = 0; x < _map.GetLength(1); x++)
                 {
                     if (_map[y, x] == _symboleWall)
                         color = ConsoleColor.Blue;
@@ -45,14 +41,14 @@ namespace PacManKC2312
                         color = ConsoleColor.Black;
 
                     Console.ForegroundColor = color;
-                    Console.Write(_map[y,x]);
+                    Console.Write(_map[y, x]);
                 }
 
                 Console.WriteLine();
             }
         }
 
-        public char[,] GetMap() 
+        public char[,] GetMap()
         {
             char[,] map = new char[_map.GetLength(0), _map.GetLength(1)];
 
@@ -68,7 +64,7 @@ namespace PacManKC2312
             bool isFood = false;
             Vector position = player.Position;
 
-            if(_map[position.Y, position.X] == _symboleFood)
+            if (_map[position.Y, position.X] == _symboleFood)
             {
                 _map[position.Y, position.X] = _symboleEmptyCell;
                 isFood = true;
@@ -89,7 +85,7 @@ namespace PacManKC2312
 
             for (int j = 0; j < _map.GetLength(0); j++)
             {
-                for(int i = 0;i < _map.GetLength(1); i++)
+                for (int i = 0; i < _map.GetLength(1); i++)
                 {
                     if (_map[i, j] == '$')
                     {
@@ -99,7 +95,7 @@ namespace PacManKC2312
                 }
             }
 
-            Vector position = new Vector(y,x);
+            Vector position = new Vector(y, x);
             return position;
         }
 
@@ -112,17 +108,17 @@ namespace PacManKC2312
                     if (_map[x, y] == _symboleFood)
                         countFood++;
 
-                    return countFood;
+            return countFood;
         }
 
         private char[,] ReadFileMap(string path)
         {
             string[] linesFile = File.ReadAllLines(path);
-            char[,] map = new char[GetMaxLengthOfLine(linesFile),linesFile.Length];
+            char[,] map = new char[GetMaxLengthOfLine(linesFile), linesFile.Length];
 
             for (int y = 0; y < linesFile.Length; y++)
                 for (int x = 0; x < map.GetLength(0); x++)
-                    map[x,y] = linesFile[y][x];
+                    map[x, y] = linesFile[y][x];
 
             return map;
         }
